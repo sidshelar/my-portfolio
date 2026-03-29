@@ -245,7 +245,7 @@ function Hero({ onScrollToProjects }) {
 
       <div className="fade-in" style={{ maxWidth: 960 }}>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: T.muted, marginBottom: 28 }}>
-          Mechanical Engineering Student
+          Industrial Engineering Student
         </p>
         <h1 className="display" style={{
           fontSize: "clamp(52px, 10vw, 136px)",
@@ -707,7 +707,7 @@ function About() {
             Engineering solutions<br /><span style={{ color: "rgba(255,255,255,0.3)" }}>from first principles.</span>
           </h2>
           <p style={{ fontSize: 14, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", maxWidth: 440, marginBottom: 20 }}>
-            Mechanical engineering student with a focus on structural analysis, thermal systems, and mechatronics. I believe in understanding a problem deeply before reaching for a solution.
+            Industrial engineering student with a focus on Robotics, Manufacturing, and Mechatronics. I believe in understanding a problem deeply before reaching for a solution.
           </p>
           <p style={{ fontSize: 14, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", maxWidth: 440 }}>
             Outside of coursework, I'm usually in the machine shop, running simulations, or designing something I can hold in my hands.
@@ -715,9 +715,9 @@ function About() {
         </div>
         <div style={{ paddingTop: 56 }}>
           {[
-            ["Education", "Purdue University — B.S. Mechanical Engineering"],
-            ["Focus Areas", "Structural Analysis · Thermal Systems · Mechatronics"],
-            ["Software", "SolidWorks · ANSYS · MATLAB · AutoCAD"],
+            ["Education", "Purdue University — B.S. Industrial Engineering"],
+            ["Focus Areas", "Manufacturing · Robotics · Mechatronics"],
+            ["Software", "SolidWorks · ANSYS · MATLAB · AutoCAD · OnShape"],
             ["Status", "Seeking internship opportunities — 2025"],
           ].map(([k, v]) => (
             <div key={k} style={{ padding: "20px 0", borderBottom: `1px solid ${T.border}` }}>
@@ -773,7 +773,7 @@ function Footer() {
   return (
     <footer style={{ padding: "32px 48px", borderTop: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <span style={{ fontSize: 11, color: T.muted }}>© 2025 Siddhant Shelar. All rights reserved.</span>
-      <span className="display" style={{ fontSize: 13, color: "rgba(255,255,255,0.15)" }}>Mechanical Engineering</span>
+      <span className="display" style={{ fontSize: 13, color: "rgba(255,255,255,0.15)" }}>Industrial Engineering</span>
     </footer>
   );
 }
