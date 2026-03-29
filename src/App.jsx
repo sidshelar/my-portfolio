@@ -254,13 +254,13 @@ function Hero({ onScrollToProjects }) {
           marginBottom: 52,
           letterSpacing: "-0.01em",
         }}>
-          Building things<br />
-          <span style={{ color: "rgba(255,255,255,0.28)" }}>that matter.</span>
+          I like making things<br />
+          <span style={{ color: "rgba(255,255,255,0.28)" }}>.</span>
         </h1>
         <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
           <button className="btn-primary" onClick={onScrollToProjects}>View Projects</button>
           <span style={{ fontSize: 12, color: T.muted, letterSpacing: "0.04em" }}>
-            Purdue University — B.S. Mechanical Engineering
+            Purdue University — B.S. Industrial Engineering
           </span>
         </div>
       </div>
