@@ -254,7 +254,7 @@ function Hero({ onScrollToProjects }) {
           marginBottom: 52,
           letterSpacing: "-0.01em",
         }}>
-          I like making things<br />
+          I Like Making Things<br />
           <span style={{ color: "rgba(255,255,255,0.28)" }}>.</span>
         </h1>
         <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
