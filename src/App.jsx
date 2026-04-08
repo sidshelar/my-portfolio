@@ -385,7 +385,7 @@ function ProjectDetail({ project, onClose, projects, onOpenProject, isAdmin, onE
           <div>
             {project.tag && <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: T.muted, marginBottom: 16 }}>{project.tag}</p>}
             <h1 className="display" style={{ fontSize: "clamp(48px, 8vw, 108px)", lineHeight: 0.9, letterSpacing: "-0.01em", color: T.text }}>
-              {project.title || "Untitled"}.
+              {project.title || "Untitled"}
             </h1>
             {isAdmin && <button onClick={() => onEdit(project)} className="btn-ghost" style={{ marginTop: 24, fontSize: 10 }}>Edit Details</button>}
           </div>
