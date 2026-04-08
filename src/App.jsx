@@ -128,68 +128,69 @@ function Lightbox({ media, startIndex, onClose }) {
 }
 
 // ─── MEDIA GALLERY (detail page) ──────────────────────────────────────────────
-function MediaGallery({ media, isAdmin, onAddMedia, onRemoveMedia }) {
+function MediaGallery({ media, isAdmin, onAddMedia, onRemoveMedia, coverHeight = "80vh", showOnlyRest = false }) {
   const [lightboxIdx, setLightboxIdx] = useState(null);
   const fileRef = useRef();
 
   const addZone = (
-    <>
+    <div style={{ padding: "40px 48px" }}>
       <div className="add-media-zone" onClick={() => fileRef.current?.click()}>
         <p style={{ fontSize: 11, color: T.muted, letterSpacing: "0.1em" }}>+ Add photos or videos</p>
       </div>
       <input ref={fileRef} type="file" multiple accept="image/*,video/*" style={{ display: "none" }}
         onChange={e => onAddMedia(e.target.files)} />
-    </>
+    </div>
   );
 
   if (!media || media.length === 0) {
-    return isAdmin ? <div style={{ padding: "0 48px 32px" }}>{addZone}</div> : null;
+    return isAdmin ? addZone : null;
   }
 
   const first = media[0];
   const rest = media.slice(1);
-  const cols = rest.length === 0 ? 1 : rest.length === 1 ? 1 : rest.length === 2 ? 2 : rest.length === 3 ? 3 : 2;
+
+  if (showOnlyRest) {
+    return (
+      <>
+        {rest.length > 0 && (
+          <div style={{ padding: "80px 48px" }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: T.muted, marginBottom: 32 }}>Process & Gallery</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: 32 }}>
+              {rest.map((m, i) => (
+                <div key={i} className="gallery-item" style={{ aspectRatio: "4/3", background: T.bg2 }} onClick={() => setLightboxIdx(i + 1)}>
+                  {m.type === "video"
+                    ? <>
+                        <video src={m.url} muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <div className="play-icon"><svg width="40" height="40" viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="rgba(0,0,0,0.45)"/><polygon points="21,15 41,26 21,37" fill="white"/></svg></div>
+                      </>
+                    : <img src={m.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  }
+                  {isAdmin && (
+                    <button onClick={e => { e.stopPropagation(); onRemoveMedia(i + 1); }} style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.7)", border: "none", color: T.text, width: 24, height: 24, borderRadius: "50%", cursor: "pointer", zIndex: 2 }}>×</button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {isAdmin && addZone}
+        {lightboxIdx !== null && <Lightbox media={media} startIndex={lightboxIdx} onClose={() => setLightboxIdx(null)} />}
+      </>
+    );
+  }
 
   return (
-    <div>
-      {/* Cover — full bleed */}
-      <div className="gallery-item" style={{ width: "100%", aspectRatio: "16/8" }} onClick={() => setLightboxIdx(0)}>
-        {first.type === "video"
-          ? <>
-              <video src={first.url} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-              <div className="play-icon"><svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="rgba(0,0,0,0.45)"/><polygon points="21,15 41,26 21,37" fill="white"/></svg></div>
-            </>
-          : <img src={first.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        }
-        {isAdmin && (
-          <button onClick={e => { e.stopPropagation(); onRemoveMedia(0); }} style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.7)", border: "none", color: T.text, width: 30, height: 30, borderRadius: "50%", cursor: "pointer", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>×</button>
-        )}
-      </div>
-
-      {/* Rest of media in grid */}
-      {rest.length > 0 && (
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 3, marginTop: 3 }}>
-          {rest.map((m, i) => (
-            <div key={i} className="gallery-item" style={{ aspectRatio: cols === 1 ? "16/7" : "4/3" }} onClick={() => setLightboxIdx(i + 1)}>
-              {m.type === "video"
-                ? <>
-                    <video src={m.url} muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                    <div className="play-icon"><svg width="40" height="40" viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="rgba(0,0,0,0.45)"/><polygon points="21,15 41,26 21,37" fill="white"/></svg></div>
-                  </>
-                : <img src={m.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-              }
-              {isAdmin && (
-                <button onClick={e => { e.stopPropagation(); onRemoveMedia(i + 1); }} style={{ position: "absolute", top: 8, right: 8, background: "rgba(0,0,0,0.7)", border: "none", color: T.text, width: 24, height: 24, borderRadius: "50%", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>×</button>
-              )}
-            </div>
-          ))}
-        </div>
+    <div className="gallery-item" style={{ width: "100%", height: coverHeight, position: "relative" }} onClick={() => setLightboxIdx(0)}>
+      {first.type === "video"
+        ? <>
+            <video src={first.url} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div className="play-icon"><svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="rgba(0,0,0,0.45)"/><polygon points="21,15 41,26 21,37" fill="white"/></svg></div>
+          </>
+        : <img src={first.url} alt="Project Cover" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      }
+      {isAdmin && (
+        <button onClick={e => { e.stopPropagation(); onRemoveMedia(0); }} style={{ position: "absolute", top: 24, right: 24, background: "rgba(0,0,0,0.7)", border: "none", color: T.text, width: 32, height: 32, borderRadius: "50%", cursor: "pointer", zIndex: 2 }}>×</button>
       )}
-
-      {/* Admin add more */}
-      {isAdmin && <div style={{ padding: "12px 0 0" }}>{addZone}</div>}
-
-      {/* Lightbox */}
       {lightboxIdx !== null && <Lightbox media={media} startIndex={lightboxIdx} onClose={() => setLightboxIdx(null)} />}
     </div>
   );
@@ -236,7 +237,7 @@ function Hero({ onScrollToProjects }) {
       <div className="fade-in" style={{ maxWidth: 960 }}>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: T.muted, marginBottom: 28 }}>Industrial Engineering Student</p>
         <h1 className="display" style={{ fontSize: "clamp(52px, 10vw, 136px)", lineHeight: 0.9, color: T.text, marginBottom: 52, letterSpacing: "-0.01em" }}>
-          I Like Making Things<br /><span style={{ color: "rgba(255,255,255,0.28)" }}>.</span>
+          I Like Making Things
         </h1>
         <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
           <button className="btn-primary" onClick={onScrollToProjects}>View Projects</button>
@@ -369,10 +370,16 @@ function ProjectDetail({ project, onClose, projects, onOpenProject, isAdmin, onE
       <Nav showBack onBack={() => window.history.back()} isAdmin={isAdmin} />
       <div style={{ height: 60 }} />
 
-      {/* Full gallery — all media */}
-      <MediaGallery media={media} isAdmin={isAdmin} onAddMedia={handleAddMedia} onRemoveMedia={handleRemoveMedia} />
+      {/* 1. Only the Cover Photo at top */}
+      <MediaGallery 
+         media={media.slice(0, 1)} 
+         isAdmin={isAdmin} 
+         onAddMedia={handleAddMedia} 
+         onRemoveMedia={handleRemoveMedia} 
+         coverHeight="70vh" 
+      />
 
-      {/* Title + meta */}
+      {/* 2. Text Content */}
       <div style={{ padding: "56px 48px 0", maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 40, alignItems: "start" }}>
           <div>
@@ -405,6 +412,15 @@ function ProjectDetail({ project, onClose, projects, onOpenProject, isAdmin, onE
           )}
         </div>
       </div>
+
+      {/* 3. The rest of the photos at the bottom */}
+      <MediaGallery 
+         media={media} 
+         isAdmin={isAdmin} 
+         onAddMedia={handleAddMedia} 
+         onRemoveMedia={handleRemoveMedia}
+         showOnlyRest={true} 
+      />
 
       {/* Next project */}
       {showNext && nextProject && nextProject.id !== project.id && (
