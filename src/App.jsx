@@ -562,9 +562,9 @@ function About() {
     <section id="about" style={{ padding: "120px 48px", borderTop: `1px solid ${T.border}` }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, maxWidth: 1200, margin: "0 auto" }}>
         <div>
-          <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: T.muted, marginBottom: 24 }}>About</p>
+          <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: T.muted, marginBottom: 24 }}>About</p>
           <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 52px)", color: T.text, lineHeight: 1.1, marginBottom: 32 }}>
-            Hi my name is Siddhant Shelar<br /><span style={{ color: "rgba(255,255,255,0.3)" }}></span>
+            Hi My Name is Siddhant<br /><span style={{ color: "rgba(255,255,255,0.3)" }}></span>
           </h2>
           <p style={{ fontSize: 14, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", maxWidth: 440, marginBottom: 20 }}>
             Industrial engineering student with a focus on Robotics, Manufacturing, and Mechatronics. I believe in understanding a problem deeply before reaching for a solution.
